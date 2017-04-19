@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通知公告新建</title>
+    <link rel="stylesheet" href="../../commonResources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../public/css/main.css"/>
+    <!-- <link rel="stylesheet" href="http://pic.demo.ums86.com/G1/M00/02/1B/rBJat1gZRqaAEHZjAAHFmBLt994612.css"/> -->
+    <link rel="stylesheet" href="../../commonResources/css/ep-icon.css">
+    <link rel="stylesheet" href="../../thridPlugin/laydate/skins/default/laydate.css">
+    <link rel="stylesheet" href="../../public/css/project.css"/>
+    <style>
+        /*该样式仅仅为演示,main.css里面很多地址为线上地址，显示不出来*/
+        .wrap { background: #fff url(https://res.ums86.com/6/img/com/line.png) repeat-y left top; }
+    </style>
+</head>
+
+<body>
+<div id="headContainer" menuid="100000"></div>
+<div class="content">
+    <div class="cw">
+        <div class="pos p-t-20 p-b-5">
+            	您当前的位置：<a href="notice_management.html">通知公告管理</a>&gt;&gt;<a href="#">公告详情</a>
+        </div>
+        <!--
+            1:如果没有左侧side，这里增加no-side类即可;
+            2:如果底部有fixed定位的button，需要增加 fixed-bottom-btn-wrap类；
+         -->
+        <div class="wrap fixed-bottom-btn-wrap">
+            <div class="side pull-left" style="display:block">
+                <div class="side-inner" >
+                    <ul>
+                        <li class="hover">
+                            <h3><a href="notice_management.html"><i class="ep ep-side-hide"></i>通知公告管理</a></h3>
+                        </li>
+                        <!--下面没有listview子元素，li直接加hover变当前状态-->
+                    </ul>
+                </div>
+            </div>
+            <div class="main-wrap">
+                <h6 class="title table_title h5 back_f5">
+                	公告详情
+                	<span class="posA title_back p_lr_15" id="title_back"><i class="ep ep-back"></i>返回</span>
+                </h6>
+                <div class="main posR">
+                	<div class="posA" style="right:0;top:0;z-index:0;" id="img_tag"></div>
+                	<textarea class="display_none" id="img_tag_hide">
+                		{#if $T.body.status == "publish"}
+                			<img src="../../public/img/detail/detail_02.png" alt="已发布"/>
+                    	{#elseif $T.body.status == "save"}
+                    		<img src="../../public/img/detail/detail_03.png" alt="已保存"/>
+                    	{#elseif $T.body.status == "close"}
+                    		<img src="../../public/img/detail/detail_01.png" alt="已关闭"/>
+                    	{#/if}
+                	</textarea>
+                    <div class="ui-element">
+                        <div class="demo-wrap">
+                            <div class="demo-title">
+
+                                <!-- <p class="clearfix">
+                                     <span class="tips pull-left">颜色调色板中的PSD格式指南和描述（色板底部为class名称）</span>
+                                     <span class="pull-right">css编译文件：<b class="text-noraml c-primary">var.scss</b></span>
+                                </p> -->
+                            </div>
+                            <div class="demo-main">
+                                <div class="item ui-form" id="ui-form">
+                                    <form class="form-horizontal" role="form" id="notice">
+                                    </form>
+                                </div>
+								<textarea id="hideArea" style="display:none;">
+                                        <div class="form-group col-sm-12">
+                                        	<h5 class="title text-center m_t_10 posR"><pre class="pre_clear_default font_weight_800 h5">{$T.body.title}</pre></h5>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                        	<div class="p_l_40 font_14">
+                                        		<pre class="pre_clear_default" style="white-space: pre-line;">
+                                        			<p style="text-indent:28px;height: auto;max-height:286px;">
+                                        			{$T.body.content.replace(/\n\s{8}/g,'<br/>&nbsp;&nbsp;&nbsp;&nbsp;').replace(/\s/g,'&nbsp;')}
+                                        			</p>
+                                        		</pre>
+                                        	</div>
+                                        </div>
+                                        <div class="form-group col-sm-12 m_t_15">
+                                            <label for="content" class="pull-left p_l_40 h5">发布范围：</label>
+                                            <div class="pull-left font_14" style="width:85%;" id="allClicks">
+                                            	<p class="h5">
+                                            		{#if $T.body.range === "common"}
+											    		(公开发布)
+											    	{#else}
+											    		{#if $T.body.publishType === "person"}
+											    			(指定发布 > 发送本级部门)
+											    		{#else}
+											    			{#if $T.body.notifyType === "manager"}
+											    				(指定发布 > 发送下级部门 > 管理员)
+												    		{#else}
+												    			(指定发布 > 发送下级部门 > 所有成员)
+												    		{#/if}
+											    		{#/if}
+											    	{#/if}
+                                            	</p>
+                                                <div class="col-sm-12 p_a_0 h5">
+                                                    {#if $T.body.range === "common"}
+											    		{$T.body.notifyRelationOrgs[0].orgName}
+											    	{#else}
+											    		{#if $T.body.publishType === "person"}
+											    			<p class="h5">{$T.body.notifyPersonRelations[0].orgName}({$T.body.notifyPersonRelations.length})</p>
+											    			<div class="h5">
+											    				{#foreach $T.body.notifyPersonRelations as a}
+											    					<span>{$T.a.userName}</span>
+											    				{#/for}
+											    			</div>
+											    		{#else}
+											    			{#if $T.body.notifyType === "manager"}
+												    			{#if $T.body.notifyRelationOrgs.length !== 0}
+												    				<div class="h5" style="padding:5px 10px;height:126px;overflow-y:auto;border:1px solid #ccc;border-radius:3px;">
+												    					{#foreach $T.body.notifyRelationOrgs as m}
+												    						<p>{$T.m.orgName}({$T.m.notifyRelationPersons.length})</p>
+												    						<div>
+												    							{#foreach $T.m.notifyRelationPersons as n}
+												    								<span>{$T.n.userName}</span>
+												    							{#/for}
+												    						</div>
+												    					{#/for}
+												    				</div>
+											    				{#else}
+											    				{#/if}
+												    		{#else}
+												    			<div class="h5">
+												    				{#foreach $T.body.notifyRelationOrgs as a}
+												    					<span>{$T.a.orgName}</span>
+												    				{#/for}
+												    			</div>
+												    		{#/if}
+											    		{#/if}
+											    	{#/if}
+                                                </div>
+                                            </div>
+                                            <i class="clearfix"></i>
+                                        </div>
+                                        <div class="form-group col-sm-12 m_t_15">
+                                            <label for="enclosure" class="text-right pull-left w_110 h5">附件：</label>
+                                            <div class="pull-left">
+                                                <div id="progress">
+                                                    <ul class="list_enclosure font_14" id="list_enclosure">
+                                                    	{#if $T.body.attachmentses.length != 0}
+	                                                    	{#foreach $T.body.attachmentses as a}
+		                                                    	<li class="overH h5">
+		                                                    		<span class="pull-left text-center p_r_5">{$T.a.name}</span>
+		                                                    		<span class="del" data-name="{$T.a.path}"><a href="javascript:;" onclick="javascript:post('{$T.a.id}');" class="cus_a_h">下载</a></span>
+		                                                    	</li>
+	                                                    	{#/for}
+                                                    	{#else}
+                                                    		<li class="overH">未有关联的附件</li>
+                                                    	{#/if}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12">
+                                            <div class="p_tb_15 p_l_84" id="sel_sub">
+                                            	<button type="button" id="back" class="m_r_15 m_l_25 btn btn-default btn-sm">返回</button>
+                                            	{#if $T.body.status !== "publish"}
+                                            	<button type="button" data-name="id={$T.body.id}&range={$T.body.range}" id="edit" class="m_r_15 btn btn-primary btn-sm display_none">编辑</button>
+                                                <button type="button" data-name="id={$T.body.id}&range={$T.body.range}" id="publish" class="m_r_15 btn btn-primary btn-sm display_none">发布</button>
+                                                {#else}
+                                            	<button type="button" data-name="id={$T.body.id}&range={$T.body.range}" id="closed" class="m_r_15 btn btn-primary btn-sm display_none">关闭</button>
+                                                {#/if}
+                                            </div>
+                                        </div>
+								</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="posF loading text-center" id="loading">
+	<img class="posR" src="../../public/img/loading.gif" alt="正在处理请求中..."/>
+</div>
+
+<!-- 发布确认 -->
+<div class="modal fade info in" id="isSend" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title text-center">发布</h4>
+            </div>
+            <input type="hidden" id="sendId"/>
+            <div class="modal-body">
+                <div class="modal-info modal-style">
+                    <div class="container-fluid row-cont-center">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 ">
+                                <div class="icon"><i class="ep ep-info"></i></div>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <div class="text">您确认发布该条公告</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="send">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 关闭确认 -->
+<div class="modal fade info in" id="isClose" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title text-center">关闭</h4>
+            </div>
+            <input type="hidden" id="closeId"/>
+            <div class="modal-body">
+                <div class="modal-info modal-style">
+                    <div class="container-fluid row-cont-center">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 ">
+                                <div class="icon"><i class="ep ep-info"></i></div>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <div class="text">您确认关闭该条公告</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="close">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../loadScript.js"></script>
+<script src="../../public/js/interface.js"></script>
+<script src="../../public/js/rely.js"></script>
+<script src="../../public/js/notice/detail_notice.js"></script>
+</html>

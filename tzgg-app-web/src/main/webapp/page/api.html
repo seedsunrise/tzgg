@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>UmsApp WebView Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        button {
+            margin: 8px 4px;
+        }
+    </style>
+    <script type="text/javascript" src="/djplatform-app-web/app/js/base/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://umsapp.ums86.com/api/umsapp-sdk.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+            // 二维码扫描
+            $('#btnQrScan').click(function() {
+                UmsApp.qrScan();
+            });
+            // 二维码扫描结果
+            $('#qrScanResult').on('umsapp://data/qr-scan', function(e, result) {
+                alert('Qr Scan Result: ' + result);
+                $(this).empty().append(result);
+            });
+            // 照片或者摄像头
+            $('#btnPhoto').click(function() {
+                UmsApp.photo();
+            });
+            // 照片或者摄像头结果
+            $('#photoResult').on('umsapp://data/photo', function(e, img) {
+                alert('Photo Result: ' + img);
+                $(this).empty().append('<img src="' + img + '" />');
+            });
+	        // 选择联系人	
+            $('#btnContactSelect').click(function() {
+                UmsApp.contactSelect();
+            });
+            // 选择联系人结果
+            $('#contactSelected').on('umsapp://data/contact-select', function(e, contacts) {
+                 /*
+                    [{
+                        "name": "赵云", 
+                        "gender": "M", 
+                        "mobile": "13170901245",
+                        "email": "yun.zhao@flaginfo.com.cn",
+                        "avatar": "http://icon.com/989.png"
+                    }, {
+                        "name": "貂蝉", 
+                        "gender": "F", 
+                        "mobile": "13170901427",
+                        "email": "chan.diao@flaginfo.com.cn",
+                        "avatar": "http://icon.com/977.png"
+                    }]
+                */
+		        alert('Contacts Selected: ' + JSON.stringify(contacts));
+                var me = $(this);
+                if (contacts && contacts.length) {
+                    var i, doms = [];
+                    for (i = 0; i < contacts.length; ++i) {
+                        doms.push('<li>' + contacts[i].name + '</li>');
+                    }
+                    me.empty().append(doms.join(''));
+                }
+                else {
+                    me.empty();
+                }
+            });
+
+            // 获取地理位置
+            $('#btnLocation').click(function() {
+                UmsApp.location();
+            });
+            // 获取地理位置结果
+            $('#locationResult').on('umsapp://data/location', function(e, loc) {
+                 /*
+                    {
+                        x: 120.3, 
+                        y: 456.7
+                    }
+                  */
+                alert('Get Location Result: ' + JSON.stringify(loc));
+		        $(this).empty().append('x: ' + loc.x + ', y: ' + loc.y);
+            });
+            // 调用重力感应
+            $('#btnShake').click(function() {
+                UmsApp.shake();
+            }).on('umsapp://data/shake', function() {
+		        alert('Mobile Shaked');
+	        });
+            // 上传文件
+            $('#btnUploadFile').click(function() {
+                UmsApp.uploadFile();
+            });
+            // 上传文件结果
+            $('#uploadFileResult').on('umsapp://data/upload-file', function(e, file) {
+                alert('Upload File Result: ' + file);
+                $(this).empty().append(file);
+            });
+            // 日期选择 
+            $('#btnDatePick').click(function() {
+                UmsApp.datePick();
+            });
+            // 日期选择结果
+            $('#datePickResult').on('umsapp://data/date-pick', function(e, date) {
+                alert('Date Pick Result: ' + date);
+                $(this).empty().append(date);
+            });
+            // 日期时间选择 
+            $('#btnDatetimePick').click(function() {
+                UmsApp.datetimePick();
+            });
+            // 日期时间选择结果
+            $('#datetimePickResult').on('umsapp://data/datetime-pick', function(e, datetime) {
+                alert('Datetime Pick Result: ' + datetime);
+                $(this).empty().append(datetime);
+            });
+            // 时间选择 
+            $('#btnTimePick').click(function() {
+                UmsApp.timePick();
+            });
+            // 时间选择结果
+            $('#timePickResult').on('umsapp://data/time-pick', function(e, time) {
+                alert('Time Pick Result: ' + time);
+                $(this).empty().append(time);
+            });
+            // 创建聊天室(默认)
+            $('#btnCreateChatroom').click(function() {
+                UmsApp.createChatroom();
+            }).on('umsapp://data/chatroom/create', function(e, chatroom) {
+                alert('Chatroom ' + JSON.stringify(chatroom) + ' created')
+            });
+            // 创建聊天室，传入手机号
+            $('#btnCreateChatroomByMobiles').click(function() {
+                UmsApp.createChatroom(['13764268709', '13818067880']);
+            });
+
+	        // 不使用事件监听回调
+            UmsApp.callback = function(name, data) {
+                // 如选择通讯录回调，
+                // name: 'umsapp://data/contact-select'
+                // data: [{...}, {..}, ...]
+                console.log('Umsapp Callback: ', name, data);
+            };
+        });
+    </script>
+  </head>
+  <body>
+    <!-- 扫描二维码触发按钮 -->
+    <button type="button" id="btnQrScan">Qr Scan</button>
+    <!-- 扫描二维码回调监听，必须有class [listener] -->
+    <div id="qrScanResult" class="listener"></div>
+
+    <!-- 选择照片或者调用摄像头触发按钮 -->
+    <button type="button" id="btnPhoto">Photo</button>
+    <!-- 选择照片或者调用摄像头回调监听，必须有class [listener] -->
+    <div id="photoResult" class="listener"></div>
+    
+    <!-- 获取地理位置触发按钮 -->
+    <button type="button" id="btnLocation">Get Location</button>
+    <!-- 获取地理位置回调监听，必须有class [listener] -->
+    <div id="locationResult" class="listener"></div>
+
+    <!-- 调用手机重力感应按钮，同时也是回调监听 -->
+    <button type="button" id="btnShake" class="listener">Shake</button><br />
+    <!-- 获取通讯录触发按钮 -->
+    <button type="button" id="btnContactSelect">Select Contact</button>
+    <!-- 获取通讯录回调监听，必须有class [listener] -->
+    <ul id="contactSelected" class="listener"></ul>
+
+
+    <!-- 上传文件触发按钮 -->
+    <button type="button" id="btnUploadFile">Upload File</button>
+    <!-- 上传文件回调监听，必须有class [listener] -->
+    <div id="uploadFileResult" class="listener"></div>
+
+    <!-- 日期选择触发按钮 -->
+    <button type="button" id="btnDatePick">Date Pick</button>
+    <!-- 日期选择回调监听，必须有class [listener] -->
+    <div id="datePickResult" class="listener"></div>
+
+    <!-- 日期时间选择触发按钮 -->
+    <button type="button" id="btnDatetimePick">Datetime Pick</button>
+    <!-- 日期时间选择回调监听，必须有class [listener] -->
+    <div id="datetimePickResult" class="listener"></div>
+
+    <!-- 时间选择触发按钮 -->
+    <button type="button" id="btnTimePick">Time Pick</button>
+    <!-- 时间选择回调监听，必须有class [listener] -->
+    <div id="timePickResult" class="listener"></div>
+    <!-- 创建聊天室 -->
+    <button id="btnCreateChatroom" class="listener">Create Chatroom</button>
+    <button id="btnCreateChatroomByMobiles" class="listener">Create Chatroom By Mobiles</button>
+  </body>
+</html>

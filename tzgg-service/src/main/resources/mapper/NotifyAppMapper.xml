@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flaginfo.dao.NotifyAppMapper">
+
+	<!-- <select id="selectAllNotify" resultType="cn.com.flaginfo.pojo.NotifyAppPO">
+       select * from (
+		SELECT
+		gn.id,
+		gn.title,
+		gn.content,
+		gn.publish_org_id,
+		gn.publish_organize publishOrgName,
+		gn.publish_time publishTime,
+		gn.type,
+		ifnull(nrp. STATUS, 'unread') isRead
+		FROM
+		group_notify gn
+		LEFT JOIN notify_relation_person nrp ON nrp.notify_id = gn.id
+		AND nrp.user_id =#{notify.userId}
+		WHERE 
+		gn.type = 1 and gn.del!=1
+		<if test="notify.allParentGroup != null and notify.allParentGroup != '' and notify.allParentGroup.size() > 0">
+			and gn.publish_org_id in
+			<foreach item="item" index="index" collection="notify.allParentGroup"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notify.allParentGroup == null or notify.allParentGroup == '' or notify.allParentGroup.size() == 0">
+		and 1=0
+		</if>
+		AND gn.`status` = 'publish'
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	gn.title like  concat('%',#{notify.searchString},'%') or gn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+		UNION ALL
+		SELECT
+		gn.id,
+		gn.title,
+		gn.content,
+		gn.publish_org_id,
+		gn.publish_organize publishOrgName,
+		gn.publish_time publishTime,
+		gn.type,
+		ifnull(nrp. STATUS, 'unread') isRead
+		FROM
+		group_notify gn
+		LEFT JOIN notify_relation_person nrp ON nrp.notify_id = gn.id
+		AND nrp.user_id = #{notify.userId}
+		WHERE
+		gn.type = 2 and gn.del!=1
+		<if test="notify.allParentGroup != null and notify.allParentGroup != '' and notify.allParentGroup.size() > 0">
+			and gn.publish_org_id in
+			<foreach item="item" index="index" collection="notify.allParentGroup"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notify.allParentGroup == null or notify.allParentGroup == '' or notify.allParentGroup.size() == 0">
+		and 1=0
+		</if>
+		AND gn.`status` = 'publish'
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	gn.title like  concat('%',#{notify.searchString},'%') or gn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+		UNION ALL
+		SELECT
+		pn.id,
+		pn.title,
+		pn.content,
+		pn.publish_org_id,
+		pn.publish_organize publishOrgName,
+		pn.publish_time publishTime,
+		3 type,
+		nrp.`status` isRead
+		FROM
+		person_notify pn
+		INNER JOIN notify_relation_person nrp ON pn.id = nrp.notify_id
+		WHERE
+		nrp.user_id = #{notify.userId}
+		AND pn.`status` = 'publish' and pn.del!=1
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	pn.title like  concat('%',#{notify.searchString},'%') or pn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+          ) tab order by publishTime desc
+	</select> -->
+	
+	 <select id="selectAllNotify" resultType="cn.com.flaginfo.pojo.NotifyAppPO">
+       select DISTINCT * from (
+		SELECT
+		gn.id,
+		gn.title,
+		gn.content,
+		gn.publish_org_id,
+		gn.publish_organize publishOrgName,
+		gn.publish_time publishTime,
+		gn.type,
+		ifnull(nrp. STATUS, 'unread') isRead
+		FROM
+		group_notify gn
+		LEFT JOIN notify_relation_person nrp ON nrp.notify_id = gn.id
+		AND nrp.user_id =#{notify.userId}
+		WHERE 
+		gn.type = 1 and gn.del!=1
+		<if test="notify.allParentGroup != null and notify.allParentGroup != '' and notify.allParentGroup.size() > 0">
+			and gn.publish_org_id in
+			<foreach item="item" index="index" collection="notify.allParentGroup"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notify.allParentGroup == null or notify.allParentGroup == '' or notify.allParentGroup.size() == 0">
+		and 1=0
+		</if>
+		AND gn.`status` = 'publish' and gn.sp_id=#{notify.spId}
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	gn.title like  concat('%',#{notify.searchString},'%') or gn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+		UNION ALL
+		SELECT
+		pn.id,
+		pn.title,
+		pn.content,
+		pn.publish_org_id,
+		pn.publish_organize publishOrgName,
+		pn.publish_time publishTime,
+		2 type,
+		ifnull(nrp. STATUS, 'unread') isRead
+		FROM
+		person_notify pn 
+		inner join notify_relation_org nro on nro.notify_id=pn.id 
+		LEFT JOIN notify_relation_person nrp ON nrp.notify_id = pn.id
+		AND nrp.user_id = #{notify.userId}
+		WHERE
+		pn.publish_type = 'party' and pn.del!=1 and pn.notify_type='member'
+		<if test="notify.groupList != null and notify.groupList != '' and notify.groupList.size() > 0">
+			and nro.org_id in
+			<foreach item="item" index="index" collection="notify.groupList"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="notify.groupList == null or notify.groupList == '' or notify.groupList.size() == 0">
+		and 1=0
+		</if>
+		AND pn.`status` = 'publish' and pn.sp_id=#{notify.spId}
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	pn.title like  concat('%',#{notify.searchString},'%') or pn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+		UNION ALL
+		SELECT
+		pn.id,
+		pn.title,
+		pn.content,
+		pn.publish_org_id,
+		pn.publish_organize publishOrgName,
+		pn.publish_time publishTime,
+		3 type,
+		nrp.`status` isRead
+		FROM
+		person_notify pn
+		INNER JOIN notify_relation_person nrp ON pn.id = nrp.notify_id
+		WHERE
+		nrp.user_id = #{notify.userId}
+		AND pn.`status` = 'publish' and pn.del!=1 and pn.sp_id=#{notify.spId}
+		AND	(pn.publish_type = 'person' or pn.notify_type='manager')
+		<if test="notify.searchString!= null and notify.searchString != ''">
+		and	pn.title like  concat('%',#{notify.searchString},'%') or pn.content like concat('%,#{notify.searchString},'%') 
+		</if>
+          )  tab   order by publishTime desc
+	</select>
+
+	<select id="selectById" resultType="cn.com.flaginfo.pojo.NotifyAppPO">
+	
+	
+		SELECT 
+		DISTINCT  
+		main.id,
+		main.title,
+		main.content,
+		publish_org_id,
+		publish_organize publishOrgName,
+		publish_time detailPublishTime,
+		ifnull(nrp. STATUS, 'unread') isRead
+		FROM
+		<if test="type==1">
+		group_notify
+		</if>
+		<if test="type!=1">
+		person_notify
+		</if> main
+		left join notify_relation_person nrp on main.id=nrp.notify_id and nrp.user_id=#{userId}
+		WHERE
+		main.del!=1 and main.id=#{notifyId}
+	
+	
+	</select>
+	
+	
+	<update id="updateToRead">
+	
+		update notify_relation_person set status ='read' where notify_id=#{notifyId} and user_id=#{userId}
+	
+	</update>
+	
+	<insert id="insertToRead" parameterType="cn.com.flaginfo.pojo.NotifyRelationPerson">
+	 
+	 <selectKey keyProperty="id" resultType="String" order="BEFORE">
+		select REPLACE(UUID(),'-','')
+		</selectKey>
+	    insert into notify_relation_person (id,user_id,user_name,status,org_id,notify_id,org_name,sp_id,phone) 
+	    values(#{id},#{userId},#{userName},#{status},#{orgId},#{notifyId},#{orgName},#{spId},#{phone});
+	</insert>
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flaginfo.dao.GroupNotifyMapper" >
+  <sql id="Common_Base_Column_List" >
+    id, title, publish_people, publish_organize, publish_time, status, create_user_name,
+    create_user_id, create_time, update_user_name, update_user_id, update_time, sp_id,
+    del, publish_org_id, content, publish_people_id
+  </sql>
+  <resultMap id="queryNotifyMap" type="cn.com.flaginfo.pojo.ex.GroupNotifyEx" extends="BaseResultMap">
+    <result column="range" jdbcType="VARCHAR" property="range"/>
+  </resultMap>
+  <sql id="queryNotifyCondition">
+    <where>
+      sp_id = #{spId}
+      and del = 0
+      <if test="0 != roleType">
+        and publish_org_id = #{publishOrgId}
+      </if>
+      <if test="title != null and title !=''">
+        and title like binary concat('%',#{title},'%')
+      </if>
+      <if test="startTime != null and startTime!=''">
+        <![CDATA[ and update_time >= #{startTime} ]]>
+      </if>
+      <if test="endTime != null and endTime!=''">
+        <![CDATA[ and update_time <= #{endTime} ]]>
+      </if>
+      <if test="status != null and status !=''">
+        and status = #{status}
+      </if>
+    </where>
+  </sql>
+  <select id="queryNotify" parameterType="cn.com.flaginfo.pojo.ex.GroupNotifyEx" resultMap="queryNotifyMap">
+    <bind name="common" value="@cn.com.flaginfo.pojo.ex.GroupNotifyEx$rangeType@COMMON.code"/>
+    <bind name="person" value="@cn.com.flaginfo.pojo.ex.GroupNotifyEx$rangeType@PERSON.code"/>
+    select *
+    from (
+    select<include refid="Common_Base_Column_List"/>,#{common} as 'range' from group_notify
+    <include refid="queryNotifyCondition"/>
+    union all
+    select<include refid="Common_Base_Column_List"/>,#{person} as 'range' from person_notify
+    <include refid="queryNotifyCondition"/>) a order by update_time desc
+  </select>
+</mapper>

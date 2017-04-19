@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>Archetype Created Web Application</display-name>
+	<filter>
+		<filter-name>ssoFilter</filter-name>
+		<filter-class>cn.com.flaginfo.user.auth.sdk.SSOFilter</filter-class>
+		<init-param>
+			<param-name>index_url</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>error_url</param-name>
+			<param-value></param-value>
+		</init-param>
+		<init-param>
+			<param-name>key_cookie_login_flag</param-name>
+			<param-value>yxt_u</param-value>
+		</init-param>
+		<init-param>
+			<param-name>key_sso_session_user</param-name>
+			<param-value>loginUser</param-value>
+		</init-param>
+		<init-param>
+			<param-name>exclude_paths</param-name>
+			<param-value>/user/login,/user/reg,/index.jsp,/notify/queryHomeNotify,/notify/detailHomeNotify,/notify/queryHomeNotifyPage</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ssoFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- SSO FIlter Config End -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<async-supported>true</async-supported>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:spring*.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- *********************spring mvc **********************************-->
+	<servlet>
+		<servlet-name>spring_mvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<!-- 
+			             这里名字定义为：dsipather-mvc.xml， 
+			             和其它spring配置区分 因为上面有一个地方配置的读取：classpath:spring*.xml， 
+				   虽然spring*.xml中配置了过滤controller，但是还是不要重复的读取mvc的配置。
+			 -->
+			<param-value>classpath:dispatcher-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring_mvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>

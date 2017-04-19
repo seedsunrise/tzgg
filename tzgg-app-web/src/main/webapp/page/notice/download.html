@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>通知公告</title>
+		<link href="../../plugin/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common/main.css" rel="stylesheet" />
+		<link href="../../css/common/style.css" rel="stylesheet" />
+		<link href="../../css/view/page.css" rel="stylesheet" />
+		<link href="../../css/common/plugin.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 通告列表 -->
+		<div class="mui-content">
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="text_center attach_detail" id="file_detail">
+							<img src="../images/cbd.jpg">
+							<div>关于参加活动的报名表</div>
+							<p class="mui-h6">3.2MB</p>
+							<button id="begin_download" type="button" class="mui-btn mui-btn-danger">开始下载</button>
+							<div id="download_progressbar" class=""></div>
+							<div id="download_detail" class="mui-clearfix mui-hidden">
+								<p class="mui-h6 mui-pull-left">1.6MB/3.2MB</p>
+								<p class="mui-h6 mui-pull-right">452k/s</p>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+		<textarea id="fileDetailTemplate" class="mui-hidden">
+			<div class="m_b_20">
+				{#if $T.fileType == 'img'}
+					<img class="" src="../../img/pic.png"/>
+					{#elseif $T.fileType == 'doc'}
+					<img class="" src="../../img/word.png"/>
+					{#elseif $T.fileType == 'xls'}
+					<img class="" src="../../img/excel.png"/>
+					{#elseif $T.fileType == 'ppt'}
+					<img class="" src="../../img/ppt.png"/>
+					{#elseif $T.fileType == 'pdf'}
+					<img class="" src="../../img/pdf.png"/>
+					{#elseif $T.fileType == 'txt'}
+					<img class="" src="../../img/txt.png"/>
+				{#/if}
+			</div>
+			<div class="f_size_17">{$T.name}</div>
+			<p class="f_color_1">{$T.size}MB</p>
+			<div id="download_progressbar" class=""></div>
+			<div id="download_detail" class="mui-clearfix mui-hidden">
+				<p class="mui-pull-left"><span id="progressValue">0</span>MB/{$T.size}MB</p>
+				<p class="mui-pull-right" id="speed"></p>
+			</div>
+			<button id="begin_download" type="button" class="mui-btn mui-btn-danger begin_download" data-path="{$T.path}" >
+				<span class="icon-download" id="download_icon"></span>
+				<span class="f_size_16" id="download_text">开始下载</span>
+			</button>
+		</textarea>
+		<script src="https://dev-app.ums86.com/js/umsapp-sdk-0.0.1.js"></script>
+		<script src="../../js/base/jquery-1.11.3.min.js"></script>
+		<script src="../../js/base/jquery-jtemplates.js"></script>
+		<script src="../../plugin/mui/js/mui.min.js"></script>
+		<script src="../../plugin/mui/js/mui.view.js"></script>
+		<script src="../../js/common/common.js"></script>
+		<script src="../../js/common/Constant.js"></script>
+		<script src="../../js/view/dj_prototype.js"></script>
+		<script src="../../js/view/notice/dj_download.js"></script>
+	</body>
+</html>

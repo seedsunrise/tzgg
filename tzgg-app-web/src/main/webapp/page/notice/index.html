@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta http-equiv="cache-control" content="no-cache">
+		<title>通知公告</title>
+		<link href="../../plugin/mui/css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/common/main.css" rel="stylesheet" />
+		<link href="../../css/view/page.css" rel="stylesheet" />
+		<link href="../../css/common/plugin.css" rel="stylesheet" />
+		<link href="../../plugin/mui/css/mui.expand.css" rel="stylesheet" />
+		<link href="../../css/common/style.css" rel="stylesheet" />
+	</head>
+	<body>
+		<!-- 通告列表 -->
+		<div class="mui-content">
+				<div class="mui-scroll-wrapper" id="pager">
+					<div class="mui-scroll" id="">
+						<div id="notice_list"></div>
+					</div>
+				</div>
+		</div>
+		
+		<!-- 视频搜索 -->
+		<div id="modal" class="mui-modal">
+			<header class="mui-bar mui-bar-nav">
+				<div class="mui-cell p_0">
+						<a id="closeSearch" href="#modal" class="mui-icon mui-icon-arrowleft mui-pull-left weui_font_col search_arrow"></a>
+						<div class="mui-input-row mui-search mui-cell-primary" style="clear:both">
+							<input id="noticeSearch" type="search" class="mui-input-clear" placeholder="请输入关键字" autocomplete="off"/>
+						</div>
+						<a id="searchBtn" href="javascript:;" class="mui-btn mui-btn-link mui-pull-right link_color">搜索</a>
+				</div>
+			</header>
+		</div>
+		<textarea id="noticeListTemplate" class="mui-hidden">
+			{#if $T.length > 0}
+				<ul class="mui-table-view m_t_o">
+					{#foreach $T as record}
+					<li class="mui-table-view-cell notice-item" data-id="{$T.record.id}" data-type="{$T.record.type}">
+						<div class="mui-ellipsis">
+							{#if $T.record.isRead == 'unread'}
+								<span class="icon-Unread"></span>
+								<span class="f_size_17">{$T.record.title}</span>
+								{#else}
+								<span class="f_size_17 f_color_1">{$T.record.title}</span>
+							{#/if}
+						</div>
+						<p class="mui-ellipsis-p p-margin f_color_1 notice-content">{$T.record.content}</p>
+						<div class="mui-clearfix">
+							<p class="mui-pull-left mui-h6">{$T.record.publishOrgName}</p>
+							<p class="mui-pull-right mui-h6">{$T.record.publishTime}</p>
+						</div>
+					</li>
+					{#/for}
+				</ul>
+				{#else}
+				<!-- 没有结果集的时候，渲染无结果页面 -->
+				<div class="text_center">
+					<img alt="" src="../../img/icon01.png" class="result_bg">
+					<div class="f_size_16">没有找到相关内容</div>
+				</div>
+			{#/if}
+		</textarea>
+		<script src="https://dev-app.ums86.com/js/umsapp-sdk-0.0.1.js?v=1231"></script>
+		<script src="../../js/base/jquery-1.11.3.min.js"></script>
+		<script src="../../plugin/mui/js/mui.min.js"></script>
+		<script src="../../plugin/mui/js/mui.expand.js"></script>
+		<script src="../../js/base/jquery-jtemplates.js"></script>
+		<script src="../../js/common/common.js"></script>
+		<script src="../../js/common/Constant.js"></script>
+		<script src="../../js/view/dj_prototype.js"></script>
+		<script src="../../js/view/notice/dj_index.js"></script>
+	</body>
+</html>

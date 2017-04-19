@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通知公告新建</title>
+   	<link rel="stylesheet" href="../../commonResources/css/bootstrap.css">
+    <link rel="stylesheet" href="../../public/css/main.css"/>
+    <!-- <link rel="stylesheet" href="http://pic.demo.ums86.com/G1/M00/02/1B/rBJat1gZRqaAEHZjAAHFmBLt994612.css"/> -->
+    <link rel="stylesheet" href="../../commonResources/css/ep-icon.css">
+    <link rel="stylesheet" href="../../thridPlugin/laydate/skins/default/laydate.css">
+    <link rel="stylesheet" href="../../public/css/project.css"/>
+    <style>
+        /*该样式仅仅为演示,main.css里面很多地址为线上地址，显示不出来*/
+        .wrap { background: #fff url(https://res.ums86.com/6/img/com/line.png) repeat-y left top; }
+    </style>
+</head>
+<body>
+<div id="headContainer" menuid="100000"></div>
+<div class="content">
+    <div class="cw">
+        <div class="pos p-t-20 p-b-5">
+            	您当前的位置：<a href="notice_management.html">通知公告管理</a>&gt;&gt;<a href="#">新建公告</a>
+        </div>
+        <!--
+            1:如果没有左侧side，这里增加no-side类即可;
+            2:如果底部有fixed定位的button，需要增加 fixed-bottom-btn-wrap类；
+         -->
+        <div class="wrap fixed-bottom-btn-wrap">
+            <div class="side pull-left" style="display:block">
+                <div class="side-inner" >
+                    <ul>
+                        <li class="hover">
+                            <h3><a href="notice_management.html"><i class="ep ep-side-hide"></i>通知公告管理</a></h3>
+                        </li>
+                        <!--下面没有listview子元素，li直接加hover变当前状态-->
+                    </ul>
+                </div>
+            </div>
+            <div class="main-wrap">
+                <h6 class="title table_title back_f5 h5 posR">
+                	新建公告
+                	<span class="posA title_back p_lr_15" id="title_back"><i class="ep ep-back"></i>返回</span>
+                </h6>
+                <div class="main">
+                    <div class="ui-element">
+                        <div class="demo-wrap">
+                            <div class="demo-title">
+
+                                <!-- <p class="clearfix">
+                                     <span class="tips pull-left">颜色调色板中的PSD格式指南和描述（色板底部为class名称）</span>
+                                     <span class="pull-right">css编译文件：<b class="text-noraml c-primary">var.scss</b></span>
+                                </p> -->
+                            </div>
+                            <div class="demo-main">
+                                <div class="item ui-form" id="ui-form">
+                                    <!-- <div class="title">表单</div> -->
+                                    <form class="form-horizontal" role="form" id="notice">
+                                        <div class="form-group col-sm-12 p_l_40">
+                                            <label for="title" class="col-sm-1 control-label p_l_c h6"><i class="c-primary">*</i>标题</label>
+                                            <div class="pull-left " style="width:600px;">
+                                                <div class="posR err">
+                                                	<input type="text" class="form-control p_r_20" style="padding-right:50px !important;" name="title" id="title" placeholder="请输入标题少于100字" data-length="100"/>
+                                                	<i class="posA font_count">0/100</i>
+                                                </div>
+                                                <span class="error display_none">标题不能为空，请输入标题</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 p_l_40">
+                                            <label for="content" class="col-sm-1 control-label p_l_c h6"><i class="c-primary">*</i>内容</label>
+                                            <div class="pull-left " style="width:600px;">
+                                                <div class="posR err p_b_20" style="border:1px solid #ccc;border-radius:4px;">
+                                                	<textarea class="form-control p_l_10 p_r_10 text_indent_30 border" name="content" id="content" cols="30" rows="10" wrap="hard" data-length="4000"></textarea>
+                                                	<i class="posA font_count" style="bottom: 0px;background-color: transparent;">0/4000</i>
+                                                </div>
+                                                <span class="error display_none">通知公告内容不能为空，请输入内容</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 p_l_40">
+                                            <label for="content" class="col-sm-1 control-label p_l_c h6">发布范围</label>
+                                            <div class="col-sm-10 p_a_0" id="allClicks">
+                                                <div class="radio radio-success pull-left inline  range">
+                                                    <input type="radio" data-name="0" value="common" name="publish" id="comPublish" checked="checked"/>
+                                                    <label for="comPublish">公开发布</label>
+                                                </div>
+                                                <div class="radio radio-success pull-left inline  range">
+                                                    <input type="radio" data-name="1" value="person" name="publish" id="cusPublish" />
+                                                    <label for="cusPublish" class="m-l-20">指定发布</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 overH border p_a_0" style="height:0;margin-left:75px;" id="sel_tree">
+                                                    <div class="p_a_10 back_f5 posR" style="width: 720px;">
+                                                    	<div class="tab posR" id="tab">
+                                                    		<span class="pull-left tabed" data-name="party">发送下级部门</span>
+                                                    		<span class="pull-left posR" data-name="person">发送本部门</span>
+                                                    		<i class="clearfix"></i>
+                                                    	</div>
+                                                    	<!-- 发送到部门 -->
+                                                    	<div class="treeContent overH" id="treeContent_party">
+                                                    		<div class="col-sm-5 p_a_10 h_full">
+                                                    			<p class="p_b_10">选择范围</p>
+                                                    			<div class="tree_Content_part overH" id="tree">
+                                                    				<div class="back_f5 overH p_tb_5">
+                                                    					<div class="col-sm-9 p_lr_10">
+                                                    						<input type="text" class="form-control sel_tree_input" id="searchPart" placeholder="请输入部门名称搜索"/>
+                                                    					</div>
+                                                    					<div class="col-sm-2 p_a_0 p_r_10 text-right">
+                                                    						<button type="button" id="party_search" class="btn btn-primary btn-sm sel_tree_input p_lr_15">搜索</button>
+                                                    					</div>
+                                                    					<i class="clearfix"></i>
+                                                    				</div>
+                                                    				<div class="sel_part_nav" id="sel_part_nav">
+                                                    					<span>全部</span>
+                                                    				</div>
+                                                    				<div>
+                                                    					<div class="col-sm-12 p_lr_10">
+                                                    						<div class="checkbox check-success pull-left inline" id="allSelParty">
+						                                                    	<input type="checkbox" name="selPart" id="selPart"/>
+						                                                    	<label class="label_checked" for="selPart">全选</label>
+						                                                	</div>
+                                                    					</div>
+                                                    					<i class="clearfix"></i>
+						                                                <ul class="col-sm-12 p_lr_10 partList posR" id="partList">
+						                                                	<img class="posR" style="top:40%;left:40%;" src="../../public/img/loading.gif" alt="正在处理请求中..."/>
+						                                                </ul>
+						                                                <textarea style="display:none;" id="partListHide">
+						                                                	{#foreach $T.body as a}
+						                                                		<li>
+							                                                		<div class="checkbox check-success pull-left inline">
+							                                                		{#if $T.a.isChecked === ""}
+									                                                    <input type="checkbox" name="selPart" id="{$T.a.id}"/>
+									                                                    <label class="label_checked" for="{$T.a.id}"></label>
+									                                                {#else}
+									                                                	<input type="checkbox" name="selPart" id="{$T.a.id}" checked="checked"/>
+									                                                	<label class="label_checked" for="{$T.a.id}"></label>
+									                                                {#/if}
+									                                                    
+									                                                </div>
+									                                                <i class="ep ep-depa" style="color:#b9b9b9;"></i>
+									                                                <span title="{$T.a.name}" class="line_h_32"
+									                                                 data-name="name={$T.a.name}&id={$T.a.id}&pId={$T.a.pId}&groupLevel={$T.a.groupLevel}">
+									                                                	{#if $T.a.name.length>14}
+									                                                		{$T.a.name.substr(0,14)}...
+									                                                	{#else}
+									                                                		{$T.a.name}
+									                                                	{#/if}
+									                                                </span>
+						                                                		</li>
+						                                                	{#/for}
+						                                                </textarea>
+                                                    				</div>
+                                                    			</div>
+                                                    		</div>
+                                                    		<div class="col-sm-1 arrow_sel_partOrPerson">
+                                                    			<img src="../../public/img/arrow_1_03.png"/>
+                                                    		</div>
+                                                    		<div class="col-sm-6 p_a_10 h_full" id="countList">
+                                                    			<div>
+                                                    				已选：<i id="seledPartCount">0 部门</i>
+                                                    				<div class="radio radio-success inline p_a_0 m_r_15 selSendParty">
+					                                                    <input type="radio" data-name="0" value="manager" id="partCus" checked="checked"/>
+					                                                    <label class="m_b_0 p_b_0" for="partCus">通知部门管理员</label>
+					                                                </div>
+					                                                <div class="radio radio-success inline p_a_0 selSendParty">
+					                                                    <input type="radio" data-name="1" value="member" id="personCus" />
+					                                                    <label class="m_b_0 p_b_0" for="personCus" class="m-l-20">通知部门所有成员</label>
+					                                                </div>
+                                                    			</div>
+                                                    			<div class="tree_Content_part" style="height:295px;overflow-y:auto;" id="seledParty">
+                                                    				
+                                                    			</div>
+                                                    			<i class="clearfix"></i>
+                                                    		</div>
+                                                    		<i class="clearfix"></i>
+                                                    	</div>
+                                                    	<!-- 发送到个人 -->
+                                                    	<div class="treeContent overH display_none" id="treeContent_person">
+                                                    		<div class="col-sm-5 p_a_10 h_full">
+                                                    			<p class="p_b_10">选择范围</p>
+                                                    			<div class="tree_Content_part overH" id="tree">
+                                                    				<div class="back_f5 overH p_tb_5">
+                                                    					<div class="col-sm-9 p_lr_10">
+                                                    						<input type="text" class="form-control sel_tree_input" id="searchPerson" placeholder="请输入成员名称搜索"/>
+                                                    					</div>
+                                                    					<div class="col-sm-2 p_a_0 p_r_10 text-right">
+                                                    						<button type="button" id="person_search" class="btn btn-primary btn-sm sel_tree_input p_lr_15">搜索</button>
+                                                    					</div>
+                                                    					<i class="clearfix"></i>
+                                                    				</div>
+                                                    				<div class="sel_part_nav" id="sel_person_nav">
+                                                    					<span></span>
+                                                    				</div>
+                                                    				<div>
+                                                    					<div class="col-sm-12 p_lr_10">
+                                                    						<div class="checkbox check-success pull-left inline" id="allSelPerson">
+						                                                    	<input type="checkbox" name="selPart" id="selPerson"/>
+						                                                    	<label class="label_checked" for="selPerson">全选</label>
+						                                                	</div>
+                                                    					</div>
+                                                    					<i class="clearfix"></i>
+						                                                <ul class="col-sm-12 p_lr_10 partList" id="personList">
+						                                                	<img class="posR" style="top:40%;left:40%;" src="../../public/img/loading.gif" alt="正在处理请求中..."/>
+						                                                </ul>
+						                                                <textarea style="display:none;" id="personListHide">
+						                                                	{#foreach $T.body as a}
+						                                                		<li>
+							                                                		<div class="checkbox check-success pull-left inline">
+							                                                		{#if $T.a.isChecked === ""}
+									                                                    <input type="checkbox" name="selPart" id="{$T.a.id}"/>
+									                                                	<label class="label_checked" for="{$T.a.id}"></label>
+									                                                {#else}
+									                                                	<input type="checkbox" name="selPart" id="{$T.a.id}" checked="checked"/>
+									                                                	<label class="label_checked" for="{$T.a.id}"></label>
+									                                                {#/if}
+									                                                </div>
+									                                                <i class="ep ep-user" style="color:#b9b9b9;"></i>
+									                                                <span title="{$T.a.name}" class="line_h_32"
+									                                                 data-name="name={$T.a.name}&id={$T.a.id}">
+									                                                	{#if $T.a.name.length>14}
+									                                                		{$T.a.name.substr(0,14)}...
+									                                                	{#else}
+									                                                		{$T.a.name}
+									                                                	{#/if}
+									                                                </span>
+						                                                		</li>
+						                                                	{#/for}
+						                                                </textarea>
+                                                    				</div>
+                                                    			</div>
+                                                    		</div>
+                                                    		<div class="col-sm-1 arrow_sel_partOrPerson">
+                                                    			<img src="../../public/img/arrow_1_03.png"/>
+                                                    		</div>
+                                                    		<div class="col-sm-6 p_a_10 h_full" id="countList">
+                                                    			<div class="p_b_10">
+                                                    				已选：<i id="seledPersonCount">0人</i>
+                                                    			</div>
+                                                    			<div class="tree_Content_part" style="height:295px;overflow-y:auto;" id="seledPerson">
+                                                    				
+                                                    			</div>
+                                                    			<i class="clearfix"></i>
+                                                    		</div>
+                                                    		<i class="clearfix"></i>
+                                                    	</div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 m_b_15 p_l_40">
+                                            <label for="enclosure" class="col-sm-1 control-label h6">附件</label>
+                                            <div class="col-sm-10 posR p_a_0">
+                                                <button class="btn btn-success back_f" type="button"><i class="ep ep-add  p-r-5"></i>添加附件</button>
+                                                <input type="file" id="enclosure" name="file" class="posA file"/>
+                                                <br/>
+                                                <i class="file_font m_t_10">可添加文档类型附件，文件个数：≤5个，文件大小：≤5MB;<br/>可用扩展名：doc,docx,ppt,pptx,xls,xlsx,txt,pdf、jpg、jpeg、png</i>
+                                                <div id="progress">
+                                                    <ul class="list_enclosure" id="list_enclosure"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-12 p_l_40">
+                                            <div class="bor_t_1 p_tb_15 p_l_84" id="sel_sub">
+                                            	<button type="button" id="back" class="m_r_15 btn btn-default btn-sm">返回</button>
+                                                <button type="button" id="save" class="m_r_15 btn btn-primary btn-sm">保存</button>
+                                                <button type="button" id="publish" class="m_r_15 btn btn-primary btn-sm">发布</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/发布该通知的确认/-->
+<div class="modal fade info in" id="saveSend" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title text-center">发布</h4>
+            </div>
+            <input type="hidden" id="sendId"/>
+            <div class="modal-body">
+                <div class="modal-warning modal-style">
+                    <div class="container-fluid row-cont-center">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 ">
+                                <div class="icon"><i class="ep ep-warning"></i></div>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <div class="text">您确认将发布该通知公告</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-name="ok" id ="send">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="posF loading text-center" id="loading">
+	<img class="posR" src="../../public/img/loading.gif" alt="正在处理请求中..."/>
+</div>
+<!--/返回确认/-->
+<div class="modal fade info in" id="backModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title text-center">返回</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info modal-style">
+                    <div class="container-fluid row-cont-center">
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 ">
+                                <div class="icon"><i class="ep ep-info"></i></div>
+                            </div>
+                            <div class="col-md-8 col-xs-8">
+                                <div class="text">您确认放弃对该通知公告的编辑</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-name="ok" id ="backSure">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../loadScript.js"></script>
+<script src="../../commonResources/js/jquery.ui.widget.js"></script>
+<script src="../../commonResources/js/jquery.fileupload.js"></script>
+<script src="../../public/js/interface.js"></script>
+<script src="../../public/js/rely.js"></script>
+<script src="../../public/js/notice/part_member.js"></script>
+<script src="../../public/js/notice/add_notice.js"></script>
+</html>

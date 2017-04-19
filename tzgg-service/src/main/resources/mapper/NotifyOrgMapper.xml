@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.flaginfo.dao.NotifyOrgMapper">
+
+	<select id="getOrgForPublishManager" resultType="java.lang.String">
+
+		select nrp.org_id from person_notify pn inner join notify_relation_person
+		nrp on pn.id=nrp.notify_id where pn.id=#{id} group by nrp.org_id
+
+	</select>
+
+	<select id="getOrgForPublishAll" resultType="java.lang.String">
+
+		SELECT
+		nro.org_id
+		FROM
+		person_notify pn
+		INNER JOIN notify_relation_org nro ON pn.id = nro.notify_id
+		WHERE
+		pn.id = #{id}
+		GROUP BY
+		nro.org_id
+	</select>
+
+
+</mapper>

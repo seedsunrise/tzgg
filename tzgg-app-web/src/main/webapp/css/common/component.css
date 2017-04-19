@@ -1,0 +1,10 @@
+@charset "utf-8";
+/*评论*/
+.comment_popover{
+	background-color:#fff !important;
+	padding:10px !important;	
+}
+.text-comment{
+	margin-bottom:5px;
+	padding:10px;
+}

@@ -1,0 +1,445 @@
+@charset "utf-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Microsoft YaHei';
+	font-size: 14px;
+}
+.f_color_1{
+	color:#666;
+}
+
+.f_color_2,.mui-h6{
+	color:#999;
+}
+.f_size_16{
+	font-size:16px;	
+}
+.f_size_17{
+	font-size:17px;	
+}
+.f_size_18{
+	font-size:18px;	
+}
+.f_size_19{
+	font-size:19px;	
+}
+.f_size_20{
+	font-size:20px;	
+}
+.page, body {
+	background-color: #fff;
+	color:#333;
+}
+ul {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #8f8f94;
+}
+a:active{
+	color:transparent;
+}
+p {
+	padding: 3px 0;
+}
+
+.fLt {
+	float: left;
+}
+
+.fRt {
+	float: right;
+}
+
+.weui_font_col {
+	color: #ccc;
+}
+
+.weui_font_sz {
+	font-size: 12px;
+}
+
+.weui_font_sz_1 {
+	font-size: 16px !important;
+}
+
+.pRe {
+	position: relative;
+}
+
+.pSta {
+	position: static;
+}
+
+.ctn {
+	margin: 0 auto;
+	text-align: center;
+}
+
+.cb {
+	clear: both;
+}
+
+.weui_outline {
+	outline: none;
+}
+
+.weui_dis {
+	display: block;
+}
+
+.weui_hide {
+	display: none;
+}
+
+.weui_font_col {
+	color: #666;
+}
+
+.page .weui_cells:first-child {
+	margin-top: 0;
+}
+.margin-t-inline{
+	margin-top:-20px;
+}
+.text_center {
+	text-align: center;
+}
+
+.text_left {
+	text-align: left;
+}
+
+.text_right {
+	text-align: right;
+}
+
+.text_over {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.weui_search_link {
+	margin: 3px 5px;
+}
+
+.border_t {
+	border-top: 1px solid #d9d9d9;
+}
+
+.border_b {
+	border-bottom: 1px solid #d9d9d9;
+}
+
+.p_0 {
+	padding: 0 !important;
+}
+
+.p_r_0 {
+	padding-right: 0;
+}
+
+.p_l_0 {
+	padding-left: 5px;
+}
+
+.p_1_5 {
+	padding: 10px 15px !important;
+}
+
+.border_padding {
+	padding: 3px;
+}
+
+.weui_btn_dialog.primary {
+	color: #f00;
+}
+
+.m_t_o {
+	margin-top: 0 !important;
+}
+
+.m_b_20 {
+	margin-bottom: 20px;
+}
+
+.f_color {
+	color: #888;
+}
+
+.b_color {
+	background-color: #fff;
+}
+
+.border_0 {
+	border: 0;
+}
+
+.font_b {
+	color: #000;
+}
+
+.clear_b:before, .clear_b:after {
+	border: 0;
+}
+
+.clear_h:before, .clear_h:after {
+	height: 0
+}
+
+.margin_5 {
+	margin: 5px;
+}
+
+.p_1_0 {
+	padding: 10px 0;
+}
+
+.body_bg {
+	background-color: #f0f0f0;
+}
+
+.d_flex {
+	display: flex;
+}
+
+.position_r {
+	position: relative;
+}
+
+.position_a {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.nav_bottom {
+	padding-bottom: 70px;
+}
+
+.font_title {
+	font-size: 18px;
+	color: #000;
+}
+
+.toolbar .picker-button, .weui_cells_radio .weui_check:checked+.weui_icon_checked:before
+	{
+	color: #f85256;
+}
+
+.zx_navbar, .sel_navbar, .sel_navbar2 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+
+.zx_navbar .weui_navbar_item.weui_bar_item_on, .sel_navbar .navbar_item.navbar_item_on,
+	.sel_navbar2 .navbar_item.navbar_item_on {
+	color: #f00;
+	border-bottom: 2px solid #f00;
+}
+
+.zx_navbar .navbar_item {
+	color: #000;
+}
+
+.sel_navbar, .sel_navbar2 {
+	background-color: #fff;
+	cursor: pointer;
+	z-index: 98;
+}
+
+.sel_navbar {
+	width: 450px;
+}
+
+.sel_navbar .navbar_item, .sel_navbar2 .navbar_item {
+	padding: 13px 5px;
+	display: inline-block;
+	text-align: center;
+}
+
+.sel_tab_bd {
+	padding-top: 52px;
+	padding-bottom: 0;
+}
+
+.jt_pos {
+	background: url('/dangjian-app-web/img/icon/bg03.png') -144px -127px
+		no-repeat;
+	width: 20px;
+	height: 26px;
+	display: inline-block;
+}
+/*mui overwrite*/
+.mui-table-view-cell .mui-active {
+	background-color: #0062CC;
+}
+
+.mui-fullheight {
+	height: 100%;
+}
+
+.mui-cell {
+	position: relative;
+}
+
+.mui-cell {
+	padding: 10px 15px;
+	position: relative;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+.mui-font-small{font-size:12px;}
+.mui-font-content{font-size:16px;}
+.mui-cell-primary {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+
+.mui-seperator {
+	display: block;
+	padding: 5px;
+	width: 100%;
+}
+
+.mui-table-view-cell.mui-active.mui-active-bg {
+	background-color: transparent;
+}
+
+.dj-line {
+	border-bottom: 1px solid #ddd;
+}
+
+.jd-header {
+	background-color: #d43b33;
+	padding:0 12px;
+}
+
+.jd-header * {
+	color: #fff !important;
+}
+
+.dj-popover {
+	width: 125px;
+}
+
+.more-icon {
+	margin-right: 5px;
+	font-size: 20px !important;
+	color: #007aff;
+	vertical-align: middle;
+}
+
+.dj-search-panel {
+	top: 40px !important;
+}
+
+.dj-search-panel .dj-search {
+	padding: 15px 0 0 10px;
+}
+
+.icon-General-situation-of-branch, .icon-leadership-ranks {
+	font-size: 100px !important;
+	display: inline-block;
+	background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(211, 60, 51, 1)),
+		to(rgba(51, 51, 51, 1)));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.icon-font-size {
+	font-size: 16px !important;
+}
+
+.mui-icon-extra-filter, .mui-icon-paperplane {
+	position: fixed;
+	bottom: 150px;
+	z-index: 99;
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	text-align: center;
+	background-color: #bc4038;
+	color: #fff;
+	border-radius: 25px;
+	background-clip: padding-box;
+	padding: 5px;
+	left: 10px;
+}
+
+.mui-icon-paperplane {
+	bottom: 100px;
+}
+
+.icon-good-selected {
+	color: #e2534c;
+}
+.icon-good-selected + .praises_num{
+	color:#e2534c;
+}
+.img-preview .img-item{
+	max-height:100px !important;
+	/*width: 100% !important;*/
+}
+.preview-lead .img-item{
+	max-height:none !important;
+}
+#uploadImg .del_icon {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	width: 15px;
+	z-index: 9;
+}
+.mui-bar-nav~.mui-content .mui-pull-top-pocket{
+	top:0;
+}
+.mui-row img{
+	max-width:100%;
+}
+/*图片预览*/
+.link_color{
+	color:#d43b33 !important;
+}
+.return_text{
+	font-size: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.mui-popup-button{
+	color:#dd524d;
+}
+#page_return{
+	height: 44px;
+    display: inline-block;
+    line-height: 44px;
+}
+.return_icon{
+	background:url('../../../app/img/icon/top_back_unsel.png') no-repeat;
+	width: 16px;
+    height: 23px;
+    display: inline-block;
+    vertical-align: middle;
+    background-size: 100%;
+}
+.return_icon:click{
+	background-image:url('../../../app/img/icon/top_back_unsel.png') no-repeat;
+}
+.search_head{
+	left:0 !important;
+}
